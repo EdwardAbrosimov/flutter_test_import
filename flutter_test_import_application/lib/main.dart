@@ -1,14 +1,9 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shimmer/shimmer.dart';
 
 const String flutterLogo = 'assets/flutter.svg';
-final List<String> dashes = [
-  'https://www.google.com/imgres?imgurl=https%3A%2F%2Fmiro.medium.com%2Fmax%2F1400%2F1*oXbK6TZiqMeXsGW5cRvQoQ.png&imgrefurl=https%3A%2F%2Fa-flutter-dev.medium.com%2Fdash-oclock-drawing-dash-ea3f6885a719&tbnid=6yRtpDO81FBgbM&vet=12ahUKEwin88CIq8v2AhXI8IUKHU9SC20QMygMegUIARC6AQ..i&docid=I-UXVb_z8vR4tM&w=1400&h=700&q=flutter%20dash&hl=ru&ved=2ahUKEwin88CIq8v2AhXI8IUKHU9SC20QMygMegUIARC6AQ',
-  'https://www.google.com/url?sa=i&url=https%3A%2F%2Ftwitter.com%2Ftimsneath%2Fstatus%2F1487144742634680320&psig=AOvVaw3eX-cvhqnJuhYvk5ziRy4t&ust=1647544336095000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPC13rSry_YCFQAAAAAdAAAAABAD',
-  'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.reddit.com%2Fr%2FFlutterDev%2Fcomments%2Fl3wcx8%2Fis_there_any_official_specification_color_size%2F&psig=AOvVaw3eX-cvhqnJuhYvk5ziRy4t&ust=1647544336095000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPC13rSry_YCFQAAAAAdAAAAABAJ',
-  'https://www.google.com/url?sa=i&url=https%3A%2F%2Ftwitter.com%2Fflutterdev%2Fstatus%2F1364265413186445312&psig=AOvVaw3eX-cvhqnJuhYvk5ziRy4t&ust=1647544336095000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCPC13rSry_YCFQAAAAAdAAAAABAP'
-];
-
 void main() {
   runApp(const MyApp());
 }
@@ -24,7 +19,61 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Welcome to Flutter'),
+        ),
+        body: Center(
+            child: ListView(
+          shrinkWrap: true,
+          children: [
+            SizedBox(
+              width: 200,
+              height: 200,
+              child: Shimmer.fromColors(
+                baseColor: Colors.lightBlue,
+                highlightColor: const Color.fromARGB(255, 6, 60, 155),
+                child: SvgPicture.asset(flutterLogo),
+              ),
+            ),
+            const Text(
+              'Carousel',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 70),
+            ),
+            CarouselSlider(
+                items: Iterable<int>.generate(99).map((i) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Container(
+                          width: MediaQuery.of(context).size.width / 3,
+                          margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                          decoration: const BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: Center(
+                              child: Text(
+                            'Number $i',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontSize: 36.0, fontWeight: FontWeight.bold),
+                          )));
+                    },
+                  );
+                }).toList(),
+                options: CarouselOptions(
+                    height: 100,
+                    enableInfiniteScroll: true,
+                    autoPlay: true,
+                    autoPlayCurve: Curves.easeInOutCubic,
+                    autoPlayInterval: const Duration(seconds: 1),
+                    autoPlayAnimationDuration: const Duration(seconds: 1))),
+            SvgPicture.network(
+                'https://raw.githubusercontent.com/dnfield/flutter_svg/7d374d7107561cbd906d7c0ca26fef02cc01e7c8/example/assets/flutter_logo.svg?sanitize=true')
+          ],
+        )),
+      ),
     );
   }
 }

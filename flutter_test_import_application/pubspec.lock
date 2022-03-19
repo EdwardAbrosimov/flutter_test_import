@@ -144,6 +144,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.4.0"
+  shimmer:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: master
+      resolved-ref: e8716de4ce3293e1e9e584ef0b4c951e1b73646b
+      url: "https://github.com/hnvn/flutter_shimmer.git"
+    source: git
+    version: "2.0.0"
   sky_engine:
     dependency: transitive
     description: flutter
